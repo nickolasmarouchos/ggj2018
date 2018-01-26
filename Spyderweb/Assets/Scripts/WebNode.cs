@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class WebNode : MonoBehaviour {
 
+    WebController controller;
+
 	// Use this for initialization
 	void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    public void Init(WebController controller)
+    {
+        this.controller = controller;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }
