@@ -14,8 +14,6 @@ public class WebNode : MonoBehaviour {
 	float flyTimer;
 	float flyTimerTotal;
 
-	bool hasFly = false;
-
 	Fly trappedFly;
 	GameObject flyBar;
     private bool pauseFlySpawn = false;
@@ -32,7 +30,7 @@ public class WebNode : MonoBehaviour {
 
 	void StartFlyTimer()
 	{
-		if (hasFly == false)
+		if (HasFly() == false)
 		{
 			flyTimer = UnityEngine.Random.Range (2f, 20f);
 			flyTimerTotal = flyTimer;
@@ -45,11 +43,11 @@ public class WebNode : MonoBehaviour {
         {
             flyTimer -= Time.deltaTime;
 
-            if (hasFly)
+            if (HasFly())
             {
                 flyBar.gameObject.GetComponent<Slider>().value = trappedFly.life / trappedFly.lifetime;
             }
-            if (flyTimer < 0 && hasFly == false)
+            if (flyTimer < 0 && !HasFly())
             {
                 AddFly();
             }
@@ -58,12 +56,11 @@ public class WebNode : MonoBehaviour {
 
     internal bool HasFly()
     {
-        return hasFly;
+        return trappedFly != null;
     }
 
     void AddFly()
 	{
-		hasFly = true;
 		trappedFly = GameObject.Instantiate<Fly>(flyPrototype);
 		trappedFly.transform.parent = transform;
 		trappedFly.transform.localPosition = new Vector3 (0, 0, 0);
@@ -103,6 +100,7 @@ public class WebNode : MonoBehaviour {
     {
         RemoveFly();
         controller.EatFly();
+        StartFlyTimer();
     }
 
 	public void EscapeFly()
@@ -116,5 +114,7 @@ public class WebNode : MonoBehaviour {
     {
         Destroy(trappedFly.gameObject);
         Destroy(flyBar.gameObject);
+        trappedFly = null;
+        flyBar = null;
     }
 }

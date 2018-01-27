@@ -41,8 +41,7 @@ public class Spider : MonoBehaviour {
             else
                 StartEating(currentNode);
         }
-
-        if (path.Count > 0)
+        else if (path.Count > 0)
         {
             if (!isMoving)
                 StartMoving();
@@ -69,6 +68,7 @@ public class Spider : MonoBehaviour {
 
     private void FinishEating()
     {
+        //Debug.Log("Finish Eating");
         currentNode.FinishEating();
         isEating = false;
     }
@@ -77,6 +77,7 @@ public class Spider : MonoBehaviour {
     {
         if (controller.CheckConnection(currentNode, path[0]))
         {
+            //Debug.Log("Start Moving: Possible");
             isMoving = true;
             path[0].StartMovingToTile();
             currentNode.LeaveTile();
@@ -91,6 +92,7 @@ public class Spider : MonoBehaviour {
         if (distance < 0.005f)
         {
             currentNode = dest;
+            isMoving = false;
             return;
         }
 

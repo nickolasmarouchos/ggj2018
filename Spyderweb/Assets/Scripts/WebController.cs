@@ -25,6 +25,8 @@ public class WebController : MonoBehaviour {
     public float spiderPowerPerFly = 5f;
     public float webCostModifier = 1f;
 
+    private ScoreController scoreController;
+
     // Use this for initialization
     void Start () {
         this.mainCam = Camera.main;
@@ -83,7 +85,13 @@ public class WebController : MonoBehaviour {
 
     public bool CheckConnection(WebNode origin, WebNode target)
     {
-        return connections[origin].ContainsKey(target);
+        if (origin == null || target == null)
+            return false;
+
+        if (connections.ContainsKey(origin))
+            return connections[origin].ContainsKey(target);
+
+        return false;
     }
 
     private void TryExpandWeb()
@@ -112,6 +120,8 @@ public class WebController : MonoBehaviour {
         }
         nodes.Remove(node);
         connections.Remove(node);
+        if (originNode == node)
+            originNode = null;
     }
 
     private void EnableBuildMode(WebNode origin)
@@ -166,6 +176,9 @@ public class WebController : MonoBehaviour {
                 return;
 
             if (false == DeductWebCost(originNode.transform.localPosition, pos2d))
+                return;
+
+            if (originNode == null)
                 return;
         }
 

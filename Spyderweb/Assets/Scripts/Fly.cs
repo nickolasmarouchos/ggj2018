@@ -38,16 +38,19 @@ public class Fly : MonoBehaviour {
 
     internal void StopEscaping()
     {
+       // Debug.Log("Stop Escaping");
         isEscaping = false;
     }
 
     public void StartEating()
     {
+        //Debug.Log("Is being eaten");
         isEscaping = false;
     }
 
     public void Die()
     {
+        //Debug.Log("Fly dead");
         node.EatFly();
     }
 }
