@@ -12,7 +12,7 @@ public class Fly : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		lifetime = 1.0f;
+		lifetime = 5.0f;
 		life = lifetime;	
 	}
 

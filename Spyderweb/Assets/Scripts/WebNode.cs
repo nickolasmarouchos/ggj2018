@@ -34,7 +34,7 @@ public class WebNode : MonoBehaviour {
 	{
 		if (hasFly == false)
 		{
-			flyTimer = Random.Range (3f, 10f);
+			flyTimer = Random.Range (2f, 20f);
 			flyTimerTotal = flyTimer;
 		}
 	}
