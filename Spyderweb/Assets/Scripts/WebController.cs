@@ -5,17 +5,19 @@ using UnityEngine;
 
 public class WebController : MonoBehaviour {
 
-    public WebNode webNodePrototype;
+	public WebNode webNodePrototype;
+	public Canvas GameUI;
 
-    Camera mainCam;
+    public Camera mainCam;
     List<WebNode> nodes;
     bool webBuildMode = false;
+
 
 	private float minWebDistance = 1f;
 
 	// Use this for initialization
 	void Start () {
-        mainCam = Camera.main;
+        this.mainCam = Camera.main;
         nodes = new List<WebNode>();
 		InitialSetup ();
     }
