@@ -2,11 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spider : MonoBehaviour {
 
     public float moveSpeed = 0.1f;
     public float eatDuration = 1f;
+	public GameObject blood;
+
+	public GameObject eatingBarPrototype;
+	GameObject eatingBar;
 
     public AudioSource audio;
     public AudioClip[] move;
@@ -64,12 +69,23 @@ public class Spider : MonoBehaviour {
         isEating = true;
         eatStart = DateTime.Now;
         PlayAudioEating();
+
+
+		eatingBar = GameObject.Instantiate<GameObject> (eatingBarPrototype);
+		eatingBar.transform.parent = transform;
+
+		Vector3 screenPos = this.controller.mainCam.WorldToScreenPoint(this.transform.position);
+		eatingBar.transform.position = new Vector3(screenPos.x,screenPos.y, 0f);
+		eatingBar.transform.parent = this.controller.GameUI.transform;
     }
 
     private void ContinueEating()
-    {
-        if ((DateTime.Now - eatStart).TotalSeconds > eatDuration)
-            FinishEating();
+	{
+		if ((DateTime.Now - eatStart).TotalSeconds > eatDuration) 
+		{
+			FinishEating ();
+		}
+		eatingBar.gameObject.GetComponent<Slider>().value = (float) ((DateTime.Now - eatStart).TotalSeconds / eatDuration);
     }
 
     private void FinishEating()
@@ -78,6 +94,9 @@ public class Spider : MonoBehaviour {
         currentNode.FinishEating();
         isEating = false;
         audio.Stop();
+		blood.SetActive (false);
+		blood.SetActive (true);
+		Destroy (eatingBar.gameObject);
     }
 
     private void StartMoving()

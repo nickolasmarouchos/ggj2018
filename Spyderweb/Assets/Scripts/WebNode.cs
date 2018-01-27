@@ -92,6 +92,7 @@ public class WebNode : MonoBehaviour {
     internal void StartEating()
     {
         trappedFly.StartEating();
+		Destroy (flyBar.gameObject);
     }
 
     internal void FinishEating()
