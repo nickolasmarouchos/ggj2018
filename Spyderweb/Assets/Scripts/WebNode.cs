@@ -9,6 +9,8 @@ public class WebNode : MonoBehaviour {
 
 	public Fly flyPrototype;
 	public GameObject flyBarPrototype;
+    public float timerMin = 2f;
+    public float timerMax = 20f;
 
     WebController controller;
 	float flyTimer;
@@ -32,7 +34,7 @@ public class WebNode : MonoBehaviour {
 	{
 		if (HasFly() == false)
 		{
-			flyTimer = UnityEngine.Random.Range (2f, 20f);
+			flyTimer = UnityEngine.Random.Range (timerMin, timerMax);
 			flyTimerTotal = flyTimer;
 		}
 	}
