@@ -225,6 +225,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Fly.cs" />
+    <Compile Include="Assets\Scripts\Spider.cs" />
+    <Compile Include="Assets\Scripts\WebConnection.cs" />
     <Compile Include="Assets\Scripts\WebController.cs" />
     <Compile Include="Assets\Scripts\WebNode.cs" />
   </ItemGroup>

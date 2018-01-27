@@ -6,17 +6,23 @@ using UnityEngine;
 public class WebController : MonoBehaviour {
 
     public WebNode webNodePrototype;
+    public WebConnection webConnectionPrototype;
+	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
+    public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
 
-    Camera mainCam;
-    List<WebNode> nodes;
-    bool webBuildMode = false;
+    private Camera mainCam;
+    private List<WebNode> nodes;
+    private Dictionary<WebNode, List<WebNode>> connections;
 
-	private float minWebDistance = 1f;
+    private bool webBuildMode = false;
+    private WebNode originNode;
+    private object neighbours;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         mainCam = Camera.main;
         nodes = new List<WebNode>();
+        connections = new Dictionary<WebNode, List<WebNode>>();
 		InitialSetup ();
     }
 
@@ -37,9 +43,10 @@ public class WebController : MonoBehaviour {
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) ||
             Input.GetMouseButtonDown(0))
         {
-            if (CheckWebNodeHit())
+            WebNode origin = CheckWebNodeHit();
+            if (origin != null)
             {
-                ResolveWebNodeHit();
+                ResolveWebNodeHit(origin);
             }
         }
 
@@ -48,45 +55,104 @@ public class WebController : MonoBehaviour {
             if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) ||
                 Input.GetMouseButtonUp(0))
             {
-				CreateNewNodeOnClick();
-                webBuildMode = false;
+                CreateNewNodeOnClick();
+                DisableBuildMode();
             }
         }
     }
 
-    private bool CheckWebNodeHit()
-    {
-        Vector3 screenPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-
-        //RaycastHit2D hit = Physics2D.Raycast(screenPos, -Vector2.up);
-		Debug.Log(Physics.Raycast(screenPos, Vector3.forward));
-        if (Physics.Raycast(screenPos, Vector3.forward))
-        {
-			//Debug.Log("hit object");
-			return true;
-        }
-		return false;
-    }
-
-    private void ResolveWebNodeHit()
+    private void EnableBuildMode(WebNode origin)
     {
         webBuildMode = true;
+        originNode = origin;
     }
 
-	private void CreateNewNodeOnClick()
+    private void DisableBuildMode()
+    {
+        webBuildMode = false;
+        originNode = null;
+    }
+
+    private WebNode CheckWebNodeHit()
+    {
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit) && hit.collider != null) { 
+            WebNode node = hit.collider.GetComponent<WebNode>();
+            if (node != null) { 
+                return node;
+            }
+        }
+		return null;
+    }
+
+    private void ResolveWebNodeHit(WebNode origin)
+    {
+        EnableBuildMode(origin);
+    }
+
+    private void CreateNewNodeOnClick()
     {
 		Vector3 screenPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-		CreateNewNode (screenPos.x, screenPos.y);
+		CreateNewNode (screenPos, originNode, true);
     }
 
-	private void CreateNewNode(float posX, float posY)
+    private void CreateNewNode(float x, float y)
+    {
+        CreateNewNode(new Vector3(x, y, 0f));
+    }
+
+	private void CreateNewNode(Vector3 pos, WebNode origin = null, bool mustConnect = false)
 	{
+        Vector3 pos2d = new Vector3(pos.x, pos.y, 0f);
+        List<WebNode> neighbours = FindNodesInRange(minWebDistance, maxWebDistance, pos2d);
+        if (neighbours.Count == 0 && mustConnect)
+            return;
+
 		WebNode node = GameObject.Instantiate<WebNode>(webNodePrototype);
 
-		node.transform.position = new Vector3(posX, posY, 0f);
+        node.transform.position = pos2d;
 		node.transform.parent = transform;
 
 		node.Init(this);
 		nodes.Add(node);
+        connections.Add(node, new List<WebNode>());
+
+        foreach (WebNode neighbour in neighbours)
+        {
+            CreateConnection(neighbour, node);
+            Debug.Log("Adding node " + node.transform.localPosition.x + " " + node.transform.localPosition.y + " & " +
+                                       neighbour.transform.localPosition.x + " " + neighbour.transform.localPosition.y);
+        }
 	}
+
+    private void CreateConnection(WebNode origin, WebNode target)
+    {
+        // visual object
+        WebConnection connection = GameObject.Instantiate<WebConnection>(webConnectionPrototype);
+        connection.Init(origin, target);
+
+        // logic object
+        AddConnection(origin, target);
+        AddConnection(target, origin);
+    }
+
+    private void AddConnection (WebNode self, WebNode other)
+    {
+        if (connections[self].Contains(other))
+            connections[self].Add(other);
+    }
+
+    private List<WebNode> FindNodesInRange(float minWebDistance, float maxWebDistance, Vector3 origin)
+    {
+        List<WebNode> neighbours = new List<WebNode>();
+        foreach (WebNode node in nodes)
+        {
+            float distance = Vector3.Distance(origin, node.transform.localPosition);
+            if (distance > minWebDistance && distance < maxWebDistance)
+                neighbours.Add(node);
+        }
+
+        return neighbours;
+    }
 }
