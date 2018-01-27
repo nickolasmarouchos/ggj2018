@@ -9,6 +9,7 @@ public class WebController : MonoBehaviour {
     public WebConnection webConnectionPrototype;
     public Spider spiderPrototype;
 	public Canvas GameUI;
+    public ScoreDisplay scoreDisplayPrototype;
 
 	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
     public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
@@ -26,6 +27,7 @@ public class WebController : MonoBehaviour {
     public float webCostModifier = 1f;
 
     private ScoreController scoreController;
+    private int maxNodeCount;
 
     // Use this for initialization
     void Start () {
@@ -48,6 +50,10 @@ public class WebController : MonoBehaviour {
         spider = GameObject.Instantiate<Spider>(spiderPrototype);
         spider.Init(this, nodes[0]);
         spider.transform.SetParent(transform);
+
+        ScoreDisplay scoreDisplay = GameObject.Instantiate<ScoreDisplay>(scoreDisplayPrototype);
+        scoreController = new ScoreController(scoreDisplay);
+        scoreDisplay.transform.SetParent(transform);
 	}
 
     // Update is called once per frame
@@ -102,7 +108,7 @@ public class WebController : MonoBehaviour {
         DisableBuildMode();
     }
 
-        public void DestroyNode(WebNode node)
+    public void DestroyNode(WebNode node)
     {
         foreach (Dictionary<WebNode, WebConnection> dict in connections.Values)
         {
@@ -191,6 +197,9 @@ public class WebController : MonoBehaviour {
 
 		node.Init(this);
 		nodes.Add(node);
+        if (nodes.Count > maxNodeCount)
+            maxNodeCount = nodes.Count;
+
         connections.Add(node, new Dictionary<WebNode, WebConnection>());
 
         foreach (WebNode neighbour in neighbours)
@@ -213,6 +222,7 @@ public class WebController : MonoBehaviour {
     public void EatFly()
     {
         spiderPower += spiderPowerPerFly;
+        scoreController.EatFly(1f, maxNodeCount);
     }
 
     private List<WebNode> FindNodesInRange(float minWebDistance, float maxWebDistance, Vector3 origin)

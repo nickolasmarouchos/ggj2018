@@ -488,7 +488,9 @@ MonoBehaviour:
   spiderPrototype: {fileID: 114169131656453412, guid: 0b26c768222374393b0f7c3a12f16cfa,
     type: 2}
   GameUI: {fileID: 1665566230}
-  minWebDistance: 1
+  scoreDisplayPrototype: {fileID: 114601891378768198, guid: 3d283b0b9a7d5eb4888e6236c354a263,
+    type: 2}
+  minWebDistance: 2
   maxWebDistance: 4
   mainCam: {fileID: 1459543018}
   spiderPower: 10
