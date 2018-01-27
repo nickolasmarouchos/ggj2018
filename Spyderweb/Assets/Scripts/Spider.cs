@@ -8,6 +8,11 @@ public class Spider : MonoBehaviour {
     public float moveSpeed = 0.1f;
     public float eatDuration = 1f;
 
+    public AudioSource audio;
+    public AudioClip[] move;
+    public AudioClip[] eat;
+    public AudioClip[] die;
+
     WebController controller;
     WebNode currentNode;
     List<WebNode> path;
@@ -33,7 +38,7 @@ public class Spider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
+
         if (!isMoving && currentNode.HasFly())
         {
             if (isEating)
@@ -58,6 +63,7 @@ public class Spider : MonoBehaviour {
         node.StartEating();
         isEating = true;
         eatStart = DateTime.Now;
+        PlayAudioEating();
     }
 
     private void ContinueEating()
@@ -71,6 +77,7 @@ public class Spider : MonoBehaviour {
         //Debug.Log("Finish Eating");
         currentNode.FinishEating();
         isEating = false;
+        audio.Stop();
     }
 
     private void StartMoving()
@@ -81,6 +88,7 @@ public class Spider : MonoBehaviour {
             isMoving = true;
             path[0].StartMovingToTile();
             currentNode.LeaveTile();
+            PlayAudioMoving();
         }
         else
             path.Clear();
@@ -93,6 +101,7 @@ public class Spider : MonoBehaviour {
         {
             currentNode = dest;
             isMoving = false;
+            audio.Stop();
             return;
         }
 
@@ -112,4 +121,21 @@ public class Spider : MonoBehaviour {
     {
         path.Add(node);
     }
+
+    private void PlayAudioMoving()
+    {
+        audio.clip = move[UnityEngine.Random.Range(0, move.Length)];
+        audio.mute = false;
+        audio.loop = true;
+        audio.Play();
+    }
+
+    private void PlayAudioEating()
+    {
+        audio.clip = eat[UnityEngine.Random.Range(0, eat.Length)];
+        audio.mute = false;
+        audio.loop = true;
+        audio.Play();
+    }
+
 }

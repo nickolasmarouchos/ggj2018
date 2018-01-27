@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 4802041253403178}
   - component: {fileID: 114169131656453412}
   - component: {fileID: 111431180111690026}
+  - component: {fileID: 82501760048336178}
   m_Layer: 0
   m_Name: Spider
   m_TagString: Untagged
@@ -371,6 +372,86 @@ Transform:
   m_Father: {fileID: 4802041253403178}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &82501760048336178
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936722455403596}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!108 &108040941983355804
 Light:
   m_ObjectHideFlags: 1
@@ -436,6 +517,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.15
   eatDuration: 1
+  audio: {fileID: 82501760048336178}
+  move:
+  - {fileID: 8300000, guid: 3c964e1fbc209bc4d9281c82105633f4, type: 3}
+  - {fileID: 8300000, guid: a182eef9cb08bec4096aff7d0d37129e, type: 3}
+  - {fileID: 8300000, guid: cd72c605cb5cb774b92a5aa6ba45901d, type: 3}
+  eat:
+  - {fileID: 8300000, guid: ac0cc36e2141ce640a6fcc311781dea0, type: 3}
+  - {fileID: 8300000, guid: 5183a2258d584c64c9850feab9281c06, type: 3}
+  - {fileID: 8300000, guid: 311cf8feae7511e46bf55ef212cd080d, type: 3}
+  - {fileID: 8300000, guid: 5d8efee8909890647b7952606c89ab65, type: 3}
+  die: []
 --- !u!212 &212215858183021454
 SpriteRenderer:
   m_ObjectHideFlags: 1
