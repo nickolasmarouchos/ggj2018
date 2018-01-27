@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Fly : MonoBehaviour {
 
 	WebNode node;
+    bool isEscaping = true;
 
 	public float lifetime;
 	public float life;
@@ -23,7 +25,8 @@ public class Fly : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		life -= Time.deltaTime;
+        if (isEscaping)
+    		life -= Time.deltaTime;
 		if (life < 0)
 			Escape ();
 	}
@@ -31,9 +34,19 @@ public class Fly : MonoBehaviour {
 	void Escape()
 	{
 		node.EscapeFly ();
-	}
+    }
 
-    void Die()
+    internal void StopEscaping()
+    {
+        isEscaping = false;
+    }
+
+    public void StartEating()
+    {
+        isEscaping = false;
+    }
+
+    public void Die()
     {
         node.EatFly();
     }

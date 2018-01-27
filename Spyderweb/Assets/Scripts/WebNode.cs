@@ -18,9 +18,10 @@ public class WebNode : MonoBehaviour {
 
 	Fly trappedFly;
 	GameObject flyBar;
+    private bool pauseFlySpawn = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 		StartFlyTimer ();
 	}
 
@@ -40,22 +41,27 @@ public class WebNode : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		flyTimer -= Time.deltaTime;
+        if (!pauseFlySpawn)
+        {
+            flyTimer -= Time.deltaTime;
 
-		if (hasFly) {
-			flyBar.gameObject.GetComponent<Slider> ().value = trappedFly.life / trappedFly.lifetime;
-		}
-		if (flyTimer < 0 && hasFly == false) {
-			AddFly ();
-		}
+            if (hasFly)
+            {
+                flyBar.gameObject.GetComponent<Slider>().value = trappedFly.life / trappedFly.lifetime;
+            }
+            if (flyTimer < 0 && hasFly == false)
+            {
+                AddFly();
+            }
+        }
 	}
 
-	void AddWebConnection(WebConnection connection)
-	{
+    internal bool HasFly()
+    {
+        return hasFly;
+    }
 
-	}
-
-	void AddFly()
+    void AddFly()
 	{
 		hasFly = true;
 		trappedFly = GameObject.Instantiate<Fly>(flyPrototype);
@@ -70,6 +76,28 @@ public class WebNode : MonoBehaviour {
 		flyBar.transform.position = new Vector3(screenPos.x,screenPos.y, 0f);
 		flyBar.transform.parent = this.controller.GameUI.transform;
 	}
+
+    public void StartMovingToTile()
+    {
+        if (trappedFly)
+            trappedFly.StopEscaping();
+        pauseFlySpawn = true;
+    }
+
+    public void LeaveTile()
+    {
+        pauseFlySpawn = false;
+    }
+
+    internal void StartEating()
+    {
+        trappedFly.StartEating();
+    }
+
+    internal void FinishEating()
+    {
+        trappedFly.Die();
+    }
 
     internal void EatFly()
     {

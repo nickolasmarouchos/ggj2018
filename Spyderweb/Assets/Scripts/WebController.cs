@@ -7,7 +7,8 @@ public class WebController : MonoBehaviour {
 
     public WebNode webNodePrototype;
     public WebConnection webConnectionPrototype;
-		public Canvas GameUI;
+    public Spider spiderPrototype;
+	public Canvas GameUI;
 
 	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
     public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
@@ -18,7 +19,7 @@ public class WebController : MonoBehaviour {
 
     private bool webBuildMode = false;
     private WebNode originNode;
-    private object neighbours;
+    private Spider spider;
 
     public float spiderPower = 10f;
     public float spiderPowerPerFly = 5f;
@@ -41,33 +42,57 @@ public class WebController : MonoBehaviour {
 		CreateNewNode (-2f, 0f);
 		CreateNewNode (-1f, -2f);
 		CreateNewNode (1f, -2f);
+
+        spider = GameObject.Instantiate<Spider>(spiderPrototype);
+        spider.Init(this, nodes[0]);
 	}
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) ||
             Input.GetMouseButtonDown(0))
         {
-            WebNode origin = CheckWebNodeHit();
-            if (origin != null)
+            WebNode nodeHit = CheckWebNodeHit();
+            if (nodeHit != null)
             {
-                ResolveWebNodeHit(origin);
+                ResolveWebNodeHit(nodeHit);
             }
         }
 
-        if (webBuildMode)
+        if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) ||
+            Input.GetMouseButtonUp(0))
         {
-            if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) ||
-                Input.GetMouseButtonUp(0))
+            if (webBuildMode)
             {
-                CreateNewNodeOnClick();
-                DisableBuildMode();
+                WebNode nodeReleasedUpon = CheckWebNodeHit();
+                if (nodeReleasedUpon == originNode)
+                    TryMoveToNode(nodeReleasedUpon);
+                else
+                    TryExpandWeb();
             }
         }
     }
 
-    public void DestroyNode(WebNode node)
+    private void TryMoveToNode(WebNode target)
+    {
+        WebNode lastNode = spider.GetLastPathNode();
+        if (CheckConnection(lastNode, target))
+            spider.AddToPath(target);
+    }
+
+    public bool CheckConnection(WebNode origin, WebNode target)
+    {
+        return connections[origin].ContainsKey(target);
+    }
+
+    private void TryExpandWeb()
+    {
+        CreateNewNodeOnClick();
+        DisableBuildMode();
+    }
+
+        public void DestroyNode(WebNode node)
     {
         foreach (Dictionary<WebNode, WebConnection> dict in connections.Values)
         {
@@ -204,4 +229,5 @@ public class WebController : MonoBehaviour {
         if (!connections[self].ContainsKey(other))
             connections[self].Add(other, connection);
     }
+
 }
