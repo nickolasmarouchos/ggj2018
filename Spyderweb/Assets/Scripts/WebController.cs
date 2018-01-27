@@ -82,6 +82,7 @@ public class WebController : MonoBehaviour {
         WebNode lastNode = spider.GetLastPathNode();
         if (CheckConnection(lastNode, target))
             spider.AddToPath(target);
+        webBuildMode = false;
     }
 
     public bool CheckConnection(WebNode origin, WebNode target)
