@@ -107,3 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 447a0b88025d54799bd1ffd417a5be11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flyPrototype: {fileID: 114760443129307982, guid: f35558f8487ae4a14a4623739eb6f275,
+    type: 2}
+  flyBarPrototype: {fileID: 1425312960932042, guid: d046c279c316645b89a440ec64eb3aef,
+    type: 2}
