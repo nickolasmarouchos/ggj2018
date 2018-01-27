@@ -32,9 +32,10 @@ public class WebNode : MonoBehaviour {
 
 	void StartFlyTimer()
 	{
-		if (HasFly() == false)
-		{
-			flyTimer = UnityEngine.Random.Range (timerMin, timerMax);
+        if (HasFly() == false)
+        {
+
+            flyTimer = UnityEngine.Random.Range(timerMin * 6f/controller.maxNodeCount, timerMax * 6f/controller.maxNodeCount);
 			flyTimerTotal = flyTimer;
 		}
 	}

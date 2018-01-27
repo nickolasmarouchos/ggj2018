@@ -15,7 +15,7 @@ public class ScoreController
 
     public void EatFly(float flyLife, int nodeCount)
     {
-        totalScore += (int)Math.Round(flyLife * maxScorePerFly) + nodeCount * scorePerNode;
+        totalScore += /* (int)Math.Round(flyLife * maxScorePerFly) + */ nodeCount * scorePerNode;
         scoreDisplay.SetScore(totalScore);
     }
 }
