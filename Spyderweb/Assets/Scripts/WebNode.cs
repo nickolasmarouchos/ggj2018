@@ -67,7 +67,7 @@ public class WebNode : MonoBehaviour {
 		trappedFly = GameObject.Instantiate<Fly>(flyPrototype);
 		trappedFly.transform.parent = transform;
 		trappedFly.transform.localPosition = new Vector3 (0, 0, 0);
-		trappedFly.Init(this);
+		trappedFly.Init(this, controller.GetFlyLifeTimeModifier());
 
 		flyBar = GameObject.Instantiate<GameObject> (flyBarPrototype);
 		flyBar.transform.parent = transform;

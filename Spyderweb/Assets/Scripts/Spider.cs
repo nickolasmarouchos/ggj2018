@@ -48,7 +48,7 @@ public class Spider : MonoBehaviour {
             else
                 MoveTo(path[0]);
 
-            if (currentNode == path[0])
+            if (path.Count > 0 && currentNode == path[0])
                 path.RemoveAt(0);
         }
     }

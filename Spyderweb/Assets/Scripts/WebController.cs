@@ -28,6 +28,7 @@ public class WebController : MonoBehaviour {
 
     private ScoreController scoreController;
     public int maxNodeCount;
+    private float flyLifeTimeModifier;
 
     // Use this for initialization
     void Start () {
@@ -258,4 +259,8 @@ public class WebController : MonoBehaviour {
             connections[self].Add(other, connection);
     }
 
+    public float GetFlyLifeTimeModifier()
+    {
+        return Math.Max(0.3f, Math.Min(1f, 10f/maxNodeCount));
+    }
 }
