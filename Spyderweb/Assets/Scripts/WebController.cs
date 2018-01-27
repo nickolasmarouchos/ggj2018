@@ -121,8 +121,6 @@ public class WebController : MonoBehaviour {
         foreach (WebNode neighbour in neighbours)
         {
             CreateConnection(neighbour, node);
-            Debug.Log("Adding node " + node.transform.localPosition.x + " " + node.transform.localPosition.y + " & " +
-                                       neighbour.transform.localPosition.x + " " + neighbour.transform.localPosition.y);
         }
 	}
 
