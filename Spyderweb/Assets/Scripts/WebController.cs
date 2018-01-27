@@ -47,6 +47,7 @@ public class WebController : MonoBehaviour {
 
         spider = GameObject.Instantiate<Spider>(spiderPrototype);
         spider.Init(this, nodes[0]);
+        spider.transform.SetParent(transform);
 	}
 
     // Update is called once per frame
@@ -185,7 +186,7 @@ public class WebController : MonoBehaviour {
 		WebNode node = GameObject.Instantiate<WebNode>(webNodePrototype);
 
         node.transform.position = pos2d;
-		node.transform.parent = transform;
+		node.transform.SetParent(transform);
 
 		node.Init(this);
 		nodes.Add(node);
@@ -231,6 +232,7 @@ public class WebController : MonoBehaviour {
         // visual object
         WebConnection connection = GameObject.Instantiate<WebConnection>(webConnectionPrototype);
         connection.Init(origin, target);
+        connection.transform.SetParent(transform);
 
         // logic object
         AddConnection(origin, target, connection);
