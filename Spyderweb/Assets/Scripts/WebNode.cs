@@ -5,6 +5,7 @@ using UnityEngine;
 public class WebNode : MonoBehaviour {
 
     WebController controller;
+	WebConnection[] connections;
 
 	// Use this for initialization
 	void Start () {
@@ -19,6 +20,11 @@ public class WebNode : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 		
+	}
+
+	void AddWebConnection(WebConnection connection)
+	{
+
 	}
 
 

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WebConnection : MonoBehaviour {
 
+	public WebNode node1;
+	public WebNode node2;
+
 	// Use this for initialization
 	void Start () {
 		
