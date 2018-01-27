@@ -16,14 +16,27 @@ public class WebNode : MonoBehaviour {
 	float flyTimer;
 	float flyTimerTotal;
 
-	Fly trappedFly;
+    public AudioSource audio;
+    public AudioClip[] spawn;
+    public AudioClip[] decay;
+
+    Fly trappedFly;
 	GameObject flyBar;
     private bool pauseFlySpawn = false;
 
     // Use this for initialization
     void Start () {
 		StartFlyTimer ();
+        PlayAudioSpawn();
 	}
+
+    private void PlayAudioSpawn()
+    {
+        audio.clip = spawn[UnityEngine.Random.Range(0, spawn.Length)];
+        audio.mute = false;
+        audio.loop = false;
+        audio.Play();
+    }
 
     public void Init(WebController controller)
     {
@@ -111,8 +124,17 @@ public class WebNode : MonoBehaviour {
 	{
         RemoveFly();
         controller.DestroyNode(this);
+        PlayAudioDecay();
 		Destroy (this.gameObject);
 	}
+
+    private void PlayAudioDecay()
+    {
+        audio.clip = decay[UnityEngine.Random.Range(0, decay.Length)];
+        audio.mute = false;
+        audio.loop = false;
+        audio.Play();
+    }
 
     void RemoveFly ()
     {
