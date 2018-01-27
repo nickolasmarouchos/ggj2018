@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,7 +33,7 @@ public class WebNode : MonoBehaviour {
 	{
 		if (hasFly == false)
 		{
-			flyTimer = Random.Range (3f, 10f);
+			flyTimer = UnityEngine.Random.Range (3f, 10f);
 			flyTimerTotal = flyTimer;
 		}
 	}
@@ -70,12 +71,22 @@ public class WebNode : MonoBehaviour {
 		flyBar.transform.parent = this.controller.GameUI.transform;
 	}
 
-	public void RemoveFly()
+    internal void EatFly()
+    {
+        RemoveFly();
+        controller.EatFly();
+    }
+
+	public void EscapeFly()
 	{
-		Debug.Log ("RemoveFly()");
-		Destroy(trappedFly.gameObject,0.5f);
-		Destroy (flyBar.gameObject);
+        RemoveFly();
         controller.DestroyNode(this);
 		Destroy (this.gameObject);
 	}
+
+    void RemoveFly ()
+    {
+        Destroy(trappedFly.gameObject);
+        Destroy(flyBar.gameObject);
+    }
 }

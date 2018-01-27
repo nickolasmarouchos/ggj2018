@@ -20,6 +20,10 @@ public class WebController : MonoBehaviour {
     private WebNode originNode;
     private object neighbours;
 
+    public float spiderPower = 10f;
+    public float spiderPowerPerFly = 5f;
+    public float webCostModifier = 1f;
+
     // Use this for initialization
     void Start () {
         this.mainCam = Camera.main;
@@ -74,7 +78,6 @@ public class WebController : MonoBehaviour {
                 {
                     toRemove.Add(storedConnection.Key);
                     storedConnection.Value.SetDecaying();
-                    
                 }
             }
             foreach (WebNode nodeToRemove in toRemove)
@@ -130,9 +133,16 @@ public class WebController : MonoBehaviour {
 	private void CreateNewNode(Vector3 pos, WebNode origin = null, bool mustConnect = false)
 	{
         Vector3 pos2d = new Vector3(pos.x, pos.y, 0f);
+
         List<WebNode> neighbours = FindNodesInRange(minWebDistance, maxWebDistance, pos2d);
-        if (neighbours.Count == 0 && mustConnect)
-            return;
+        if (mustConnect)
+        {
+            if (neighbours.Count == 0)
+                return;
+
+            if (false == DeductWebCost(originNode.transform.localPosition, pos2d))
+                return;
+        }
 
 		WebNode node = GameObject.Instantiate<WebNode>(webNodePrototype);
 
@@ -147,7 +157,36 @@ public class WebController : MonoBehaviour {
         {
             CreateConnection(neighbour, node);
         }
+
 	}
+
+    private bool DeductWebCost(Vector3 origin, Vector3 target)
+    {
+        float cost = Vector3.Distance(origin, target) * webCostModifier;
+        if (spiderPower < cost)
+            return false;
+
+        spiderPower -= cost;
+        return true;
+    }
+
+    public void EatFly()
+    {
+        spiderPower += spiderPowerPerFly;
+    }
+
+    private List<WebNode> FindNodesInRange(float minWebDistance, float maxWebDistance, Vector3 origin)
+    {
+        List<WebNode> neighbours = new List<WebNode>();
+        foreach (WebNode node in nodes)
+        {
+            float distance = Vector3.Distance(origin, node.transform.localPosition);
+            if (distance > minWebDistance && distance < maxWebDistance)
+                neighbours.Add(node);
+        }
+
+        return neighbours;
+    }
 
     private void CreateConnection(WebNode origin, WebNode target)
     {
@@ -164,18 +203,5 @@ public class WebController : MonoBehaviour {
     {
         if (!connections[self].ContainsKey(other))
             connections[self].Add(other, connection);
-    }
-
-    private List<WebNode> FindNodesInRange(float minWebDistance, float maxWebDistance, Vector3 origin)
-    {
-        List<WebNode> neighbours = new List<WebNode>();
-        foreach (WebNode node in nodes)
-        {
-            float distance = Vector3.Distance(origin, node.transform.localPosition);
-            if (distance > minWebDistance && distance < maxWebDistance)
-                neighbours.Add(node);
-        }
-
-        return neighbours;
     }
 }

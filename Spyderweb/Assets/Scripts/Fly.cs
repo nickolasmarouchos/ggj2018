@@ -30,7 +30,11 @@ public class Fly : MonoBehaviour {
 
 	void Escape()
 	{
-		this.node.RemoveFly ();
-		Destroy (this);
+		node.EscapeFly ();
 	}
+
+    void Die()
+    {
+        node.EatFly();
+    }
 }
