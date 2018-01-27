@@ -7,10 +7,12 @@ public class WebController : MonoBehaviour {
 
     public WebNode webNodePrototype;
     public WebConnection webConnectionPrototype;
+		public Canvas GameUI;
+
 	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
     public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
 
-    private Camera mainCam;
+    public Camera mainCam;
     private List<WebNode> nodes;
     private Dictionary<WebNode, List<WebNode>> connections;
 
@@ -20,7 +22,7 @@ public class WebController : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        mainCam = Camera.main;
+        this.mainCam = Camera.main;
         nodes = new List<WebNode>();
         connections = new Dictionary<WebNode, List<WebNode>>();
 		InitialSetup ();
