@@ -12,6 +12,8 @@ public class WebConnection : MonoBehaviour {
 
     private WebNode origin;
     private WebNode target;
+    private bool isDecaying = false;
+
 
     // Use this for initialization
     void Start () {
@@ -36,9 +38,21 @@ public class WebConnection : MonoBehaviour {
                                          length * 0.5f);
     }
 
-	// Update is called once per frame
-	void Update () {
-		
+    public void SetDecaying()
+    {
+        isDecaying = true;
+    }
+
+    // Update is called once per frame
+    void Update () {
+		if (isDecaying)
+        {
+            AnimateDecay();
+        }
 	}
 
+    void AnimateDecay()
+    {
+        Destroy(gameObject);
+    }
 }

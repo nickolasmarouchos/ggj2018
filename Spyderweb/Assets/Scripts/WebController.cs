@@ -14,7 +14,7 @@ public class WebController : MonoBehaviour {
 
     public Camera mainCam;
     private List<WebNode> nodes;
-    private Dictionary<WebNode, List<WebNode>> connections;
+    private Dictionary<WebNode, Dictionary<WebNode, WebConnection>> connections;
 
     private bool webBuildMode = false;
     private WebNode originNode;
@@ -24,7 +24,7 @@ public class WebController : MonoBehaviour {
     void Start () {
         this.mainCam = Camera.main;
         nodes = new List<WebNode>();
-        connections = new Dictionary<WebNode, List<WebNode>>();
+        connections = new Dictionary<WebNode, Dictionary<WebNode, WebConnection>>();
 		InitialSetup ();
     }
 
@@ -61,6 +61,29 @@ public class WebController : MonoBehaviour {
                 DisableBuildMode();
             }
         }
+    }
+
+    public void DestroyNode(WebNode node)
+    {
+        foreach (Dictionary<WebNode, WebConnection> dict in connections.Values)
+        {
+            List<WebNode> toRemove = new List<WebNode>();
+            foreach (KeyValuePair<WebNode, WebConnection> storedConnection in dict)
+            {
+                if (node == storedConnection.Key)
+                {
+                    toRemove.Add(storedConnection.Key);
+                    storedConnection.Value.SetDecaying();
+                    
+                }
+            }
+            foreach (WebNode nodeToRemove in toRemove)
+            {
+                dict.Remove(nodeToRemove);
+            }
+        }
+        nodes.Remove(node);
+        connections.Remove(node);
     }
 
     private void EnableBuildMode(WebNode origin)
@@ -118,7 +141,7 @@ public class WebController : MonoBehaviour {
 
 		node.Init(this);
 		nodes.Add(node);
-        connections.Add(node, new List<WebNode>());
+        connections.Add(node, new Dictionary<WebNode, WebConnection>());
 
         foreach (WebNode neighbour in neighbours)
         {
@@ -133,14 +156,14 @@ public class WebController : MonoBehaviour {
         connection.Init(origin, target);
 
         // logic object
-        AddConnection(origin, target);
-        AddConnection(target, origin);
+        AddConnection(origin, target, connection);
+        AddConnection(target, origin, connection);
     }
 
-    private void AddConnection (WebNode self, WebNode other)
+    private void AddConnection (WebNode self, WebNode other, WebConnection connection)
     {
-        if (connections[self].Contains(other))
-            connections[self].Add(other);
+        if (!connections[self].ContainsKey(other))
+            connections[self].Add(other, connection);
     }
 
     private List<WebNode> FindNodesInRange(float minWebDistance, float maxWebDistance, Vector3 origin)

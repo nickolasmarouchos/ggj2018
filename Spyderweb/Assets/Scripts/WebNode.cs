@@ -10,8 +10,6 @@ public class WebNode : MonoBehaviour {
 	public GameObject flyBarPrototype;
 
     WebController controller;
-	WebConnection[] connections;
-
 	float flyTimer;
 	float flyTimerTotal;
 
@@ -77,8 +75,7 @@ public class WebNode : MonoBehaviour {
 		Debug.Log ("RemoveFly()");
 		Destroy(trappedFly.gameObject,0.5f);
 		Destroy (flyBar.gameObject);
+        controller.DestroyNode(this);
 		Destroy (this.gameObject);
-		hasFly = false;
-		StartFlyTimer ();
 	}
 }
