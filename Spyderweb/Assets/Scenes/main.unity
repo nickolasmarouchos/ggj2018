@@ -490,12 +490,13 @@ MonoBehaviour:
   GameUI: {fileID: 1665566230}
   scoreDisplayPrototype: {fileID: 114601891378768198, guid: 3d283b0b9a7d5eb4888e6236c354a263,
     type: 2}
-  minWebDistance: 2
-  maxWebDistance: 4
+  minWebDistance: 1
+  maxWebDistance: 5
   mainCam: {fileID: 1459543018}
   spiderPower: 10
   spiderPowerPerFly: 5
   webCostModifier: 1
+  maxNodeCount: 0
 --- !u!4 &1776504582
 Transform:
   m_ObjectHideFlags: 0

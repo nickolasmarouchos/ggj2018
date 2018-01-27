@@ -94,6 +94,8 @@ MonoBehaviour:
     type: 2}
   flyBarPrototype: {fileID: 1425312960932042, guid: d046c279c316645b89a440ec64eb3aef,
     type: 2}
+  timerMin: 10
+  timerMax: 20
 --- !u!136 &136142793822813522
 CapsuleCollider:
   m_ObjectHideFlags: 1

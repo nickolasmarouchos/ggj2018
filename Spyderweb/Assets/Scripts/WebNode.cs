@@ -32,9 +32,10 @@ public class WebNode : MonoBehaviour {
 
 	void StartFlyTimer()
 	{
-		if (HasFly() == false)
-		{
-			flyTimer = UnityEngine.Random.Range (timerMin, timerMax);
+        if (HasFly() == false)
+        {
+
+            flyTimer = UnityEngine.Random.Range(timerMin * 6f/controller.maxNodeCount, timerMax * 6f/controller.maxNodeCount);
 			flyTimerTotal = flyTimer;
 		}
 	}
@@ -66,7 +67,7 @@ public class WebNode : MonoBehaviour {
 		trappedFly = GameObject.Instantiate<Fly>(flyPrototype);
 		trappedFly.transform.parent = transform;
 		trappedFly.transform.localPosition = new Vector3 (0, 0, 0);
-		trappedFly.Init(this);
+		trappedFly.Init(this, controller.GetFlyLifeTimeModifier());
 
 		flyBar = GameObject.Instantiate<GameObject> (flyBarPrototype);
 		flyBar.transform.parent = transform;

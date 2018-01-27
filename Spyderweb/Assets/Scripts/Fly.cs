@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Fly : MonoBehaviour {
 
-	WebNode node;
+    WebNode node;
+    public GameObject[] models;
     bool isEscaping = true;
 
 	public float lifetime;
@@ -14,13 +15,13 @@ public class Fly : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		lifetime = 5.0f;
 		life = lifetime;	
 	}
 
-	public void Init(WebNode node)
+	public void Init(WebNode node, float lifetimeModifier)
 	{
 		this.node = node;
+        lifetime *= lifetimeModifier;
 	}
 
 	// Update is called once per frame
@@ -44,7 +45,8 @@ public class Fly : MonoBehaviour {
 
     public void StartEating()
     {
-        //Debug.Log("Is being eaten");
+        foreach (GameObject model in models)
+            model.SetActive(false);
         isEscaping = false;
     }
 
@@ -52,5 +54,10 @@ public class Fly : MonoBehaviour {
     {
         //Debug.Log("Fly dead");
         node.EatFly();
+    }
+
+    internal void Init(WebNode webNode, object flyLifeTimeModifier)
+    {
+        throw new NotImplementedException();
     }
 }
