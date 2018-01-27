@@ -111,3 +111,5 @@ MonoBehaviour:
     type: 2}
   flyBarPrototype: {fileID: 1425312960932042, guid: d046c279c316645b89a440ec64eb3aef,
     type: 2}
+  timerMin: 10
+  timerMax: 30
