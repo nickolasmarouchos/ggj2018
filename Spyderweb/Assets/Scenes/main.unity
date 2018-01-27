@@ -222,6 +222,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   webNodePrototype: {fileID: 114558881371383996, guid: 64ca711f22d6a4f8b8b7d6eb771f0368,
     type: 2}
+  webConnectionPrototype: {fileID: 114240747287306710, guid: 2a50f3809552e463cbe61f50fe593def,
+    type: 2}
+  minWebDistance: 1
+  maxWebDistance: 4
 --- !u!4 &1776504582
 Transform:
   m_ObjectHideFlags: 0
