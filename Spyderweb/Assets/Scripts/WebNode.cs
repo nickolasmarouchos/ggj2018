@@ -115,7 +115,7 @@ public class WebNode : MonoBehaviour {
 
     void RemoveFly ()
     {
-        Destroy(trappedFly.gameObject);
+        // Destroy(trappedFly.gameObject);
         Destroy(flyBar.gameObject);
         trappedFly = null;
         flyBar = null;
