@@ -111,7 +111,7 @@ public class Spider : MonoBehaviour {
 		blood.SetActive (false);
 		blood.SetActive (true);
 		Destroy (eatingBar.gameObject);
-        GetHealth();
+        IncreaseHealth();
     }
 
 
@@ -177,9 +177,14 @@ public class Spider : MonoBehaviour {
         audio.Play();
     }
 
-    private void GetHealth()
+    private void IncreaseHealth()
     {
         health = Math.Min(maxHealth, health + healthPerFly);
+    }
+
+    public float GetHealth()
+    {
+        return health / maxHealth;
     }
 
     private void LoseHealth()

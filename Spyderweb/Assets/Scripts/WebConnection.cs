@@ -7,14 +7,10 @@ public class WebConnection : MonoBehaviour {
 
     public Transform line;
 
-    public WebNode node1;
-	public WebNode node2;
-
-    private WebNode origin;
-    private WebNode target;
+    public WebNode origin;
+    public WebNode target;
     private bool isDecaying = false;
-
-
+    
     // Use this for initialization
     void Start () {
 		

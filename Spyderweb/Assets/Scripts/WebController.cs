@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WebController : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class WebController : MonoBehaviour {
 	public WebPreview webPreviewPrototype;
     public Spider spiderPrototype;
 	public Canvas GameUI;
+    public Slider spiderHealthBar;
     public ScoreDisplay scoreDisplayPrototype;
 	public GameObject nodeBreakEffect;
 
@@ -98,6 +100,8 @@ public class WebController : MonoBehaviour {
                     TryExpandWeb();
             }
         }
+
+        spiderHealthBar.value = spider.GetHealth();
     }
 
     private void TryMoveToNode(WebNode target)

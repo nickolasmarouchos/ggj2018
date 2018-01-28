@@ -22,6 +22,10 @@ public class WebPreview : MonoBehaviour {
 		this.origin = origin;
 		this.target = target;
 
+        if (origin == null ||
+            target == null)
+            line.transform.eulerAngles = Vector3.up;
+
 //		float length = Vector3.Distance(origin.gameObject.transform.localPosition, target);
 		float xDelta = origin.gameObject.transform.localPosition.x - target.x;
 		float yDelta = origin.gameObject.transform.localPosition.y - target.y;

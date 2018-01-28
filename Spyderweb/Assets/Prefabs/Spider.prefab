@@ -414,7 +414,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -564,6 +564,10 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8861a2f124a91e34399d8fbf24a67b8e, type: 3}
   - {fileID: 8300000, guid: 613540ee438e02245a051b139151e28f, type: 3}
   die: []
+  maxHealth: 100
+  healthDecayPerSecond: 2
+  healthPerFly: 2
+  health: 0
 --- !u!198 &198433510718344180
 ParticleSystem:
   m_ObjectHideFlags: 1
