@@ -17,7 +17,7 @@ public class WebController : MonoBehaviour {
 	public GameObject nodeBreakEffect;
 
 	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
-    public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
+    public float maxWebDistance = 3f; // now it's changable at runtime for Unity shenanigans :3
 
     public Camera mainCam;
     private List<WebNode> nodes;
