@@ -1520,7 +1520,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 273}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1312776186
 MonoBehaviour:
@@ -2044,6 +2044,7 @@ MonoBehaviour:
   spiderPrototype: {fileID: 114169131656453412, guid: 0b26c768222374393b0f7c3a12f16cfa,
     type: 2}
   GameUI: {fileID: 1665566230}
+  scoreText: {fileID: 1312776186}
   spiderHealthBar: {fileID: 559467493}
   scoreDisplayPrototype: {fileID: 114601891378768198, guid: 3d283b0b9a7d5eb4888e6236c354a263,
     type: 2}
@@ -2086,7 +2087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1807188506
 RectTransform:
   m_ObjectHideFlags: 0

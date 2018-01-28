@@ -11,6 +11,7 @@ public class WebController : MonoBehaviour {
 	public WebPreview webPreviewPrototype;
     public Spider spiderPrototype;
 	public Canvas GameUI;
+    public Text scoreText;
     public Slider spiderHealthBar;
     public ScoreDisplay scoreDisplayPrototype;
 	public GameObject nodeBreakEffect;
@@ -32,6 +33,7 @@ public class WebController : MonoBehaviour {
     public float spiderPower = 10f;
     public float spiderPowerPerFly = 5f;
     public float webCostModifier = 1f;
+    public float maxSpiderPower = 30f;
 
     private ScoreController scoreController;
     public int maxNodeCount;
@@ -63,6 +65,7 @@ public class WebController : MonoBehaviour {
         spider.transform.SetParent(transform);
 
         ScoreDisplay scoreDisplay = GameObject.Instantiate<ScoreDisplay>(scoreDisplayPrototype);
+        scoreDisplay.textBox = scoreText;
         scoreController = new ScoreController(scoreDisplay);
         scoreDisplay.transform.SetParent(transform);
 	}
@@ -246,7 +249,9 @@ public class WebController : MonoBehaviour {
 		nodes.Add(node);
         maxNodeCount = Math.Max(nodes.Count, maxNodeCount);
         if (scoreController != null)
+        {
             scoreController.CreateNode(maxNodeCount);
+        }
 
         connections.Add(node, new Dictionary<WebNode, WebConnection>());
 
@@ -270,7 +275,7 @@ public class WebController : MonoBehaviour {
 
     public void EatFly()
     {
-        spiderPower += spiderPowerPerFly;
+        spiderPower = Math.Min(maxSpiderPower, spiderPowerPerFly);
         scoreController.EatFly(1f, maxNodeCount);
     }
 
