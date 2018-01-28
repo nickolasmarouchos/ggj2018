@@ -167,8 +167,6 @@ public class WebController : MonoBehaviour {
 
 	private void EnableWebPreview (WebNode origin)
 	{
-		Debug.Log ("EnableWebPreview");
-		//create web preview
 		previewWeb = GameObject.Instantiate<WebPreview> (webPreviewPrototype);
 		previewOrigin = origin;
 		UpdateWebPreview ();
@@ -176,17 +174,12 @@ public class WebController : MonoBehaviour {
 
     private void DisableWebPreview()
 	{
-		Debug.Log ("DisableWebPreview");
-		//remove web preview
 		previewOrigin = null;
 		Destroy(previewWeb.gameObject);
 	}
 
 	private void UpdateWebPreview()
 	{
-		Debug.Log ("UpdateWebPreview");
-		//update web preview
-		//Camera.main.ScreenPointToRay(Input.mousePosition);
 		Vector3 inputLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		previewWeb.updateVisual(previewOrigin,inputLocation);
 		previewWeb.transform.SetParent(transform);
@@ -294,6 +287,24 @@ public class WebController : MonoBehaviour {
 
         return neighbours;
     }
+		
+
+	public void SendVibrationFromNode(WebNode origin, int num)
+	{
+
+
+		Dictionary<WebNode, WebConnection> nodeConnections = connections [origin];
+		foreach (WebConnection webtoVibrate in nodeConnections.Values)
+		{
+			webtoVibrate.gameObject.GetComponent<Animation> ().Play ("webVibrate1");
+		}
+		/*
+		foreach (WebNode nodeToPropogate in nodeConnections.Keys)
+		{
+			nodeToPropogate.Vibrate (num);
+		}
+		*/
+	}
 
     private void CreateConnection(WebNode origin, WebNode target)
     {

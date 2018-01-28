@@ -23,6 +23,7 @@ public class WebNode : MonoBehaviour {
     Fly trappedFly;
 	GameObject flyBar;
     private bool pauseFlySpawn = false;
+	private bool isVibrating = false;
 
     // Use this for initialization
     void Start () {
@@ -89,6 +90,20 @@ public class WebNode : MonoBehaviour {
 		Vector3 screenPos = this.controller.mainCam.WorldToScreenPoint(this.transform.position);
 		flyBar.transform.position = new Vector3(screenPos.x,screenPos.y, 0f);
 		flyBar.transform.parent = this.controller.GameUI.transform;
+		SendVibration (3);
+	}
+
+	private void SendVibration(int num)
+	{
+		this.controller.SendVibrationFromNode (this, num);
+	}
+
+	public void Vibrate(int num)
+	{
+		if (!isVibrating) {
+			if (num > 2)
+				SendVibration (num - 1);
+		}
 	}
 
     public void StartMovingToTile()
