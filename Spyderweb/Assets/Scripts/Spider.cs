@@ -173,8 +173,8 @@ public class Spider : MonoBehaviour {
     {
         audio.clip = eat[UnityEngine.Random.Range(0, eat.Length)];
         audio.mute = false;
-        audio.loop = true;
-        audio.Play();
+		audio.loop = false;
+		audio.PlayDelayed(0.7f);
     }
 
     private void IncreaseHealth()

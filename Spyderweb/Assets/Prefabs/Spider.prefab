@@ -559,10 +559,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 809c543bd8a38fa43828444bb252c2c1, type: 3}
   - {fileID: 8300000, guid: cd72c605cb5cb774b92a5aa6ba45901d, type: 3}
   eat:
-  - {fileID: 8300000, guid: 5183a2258d584c64c9850feab9281c06, type: 3}
-  - {fileID: 8300000, guid: c4952329868ab54408d6b7373475fffe, type: 3}
   - {fileID: 8300000, guid: 8861a2f124a91e34399d8fbf24a67b8e, type: 3}
-  - {fileID: 8300000, guid: 613540ee438e02245a051b139151e28f, type: 3}
   die: []
   maxHealth: 100
   healthDecayPerSecond: 6
