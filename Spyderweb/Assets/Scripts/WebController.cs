@@ -11,6 +11,7 @@ public class WebController : MonoBehaviour {
     public Spider spiderPrototype;
 	public Canvas GameUI;
     public ScoreDisplay scoreDisplayPrototype;
+	public GameObject nodeBreakEffect;
 
 	public float minWebDistance = 1f; // now it's changable at runtime for Unity shenanigans :3
     public float maxWebDistance = 4f; // now it's changable at runtime for Unity shenanigans :3
@@ -143,7 +144,10 @@ public class WebController : MonoBehaviour {
             }
         }
         nodes.Remove(node);
-        connections.Remove(node);
+		connections.Remove(node);
+		GameObject nodeDestroy = GameObject.Instantiate<GameObject>(nodeBreakEffect);
+
+		nodeDestroy.transform.position = node.transform.position;
         if (originNode == node)
             originNode = null;
     }
