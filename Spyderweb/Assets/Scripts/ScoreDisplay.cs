@@ -19,6 +19,6 @@ public class ScoreDisplay : MonoBehaviour
     public void SetScore(Score score)
     {
         if (textBox != null)
-            textBox.text = "Nodes: " + score.nodes + "\n Flies: " + score.flies; 
+            textBox.text = "Highest node count: " + score.nodes + "\n Flies eaten: " + score.flies; 
     }
 }

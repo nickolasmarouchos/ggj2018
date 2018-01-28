@@ -94,9 +94,4 @@ public class Fly : MonoBehaviour {
         Destroy(gameObject, 1f);
         PlayAudioDying();
     }
-
-    internal void Init(WebNode webNode, object flyLifeTimeModifier)
-    {
-        throw new NotImplementedException();
-    }
 }
