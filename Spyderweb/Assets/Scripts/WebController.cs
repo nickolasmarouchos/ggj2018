@@ -97,9 +97,10 @@ public class WebController : MonoBehaviour {
             if (webBuildMode)
             {
                 WebNode nodeReleasedUpon = CheckWebNodeHit();
-                if (nodeReleasedUpon == originNode)
-                    TryMoveToNode(nodeReleasedUpon);
-                else
+				if (nodeReleasedUpon == originNode) {
+					AbortNodeCreation ();
+					TryMoveToNode (nodeReleasedUpon);
+				}else
                     TryExpandWeb();
             }
         }
@@ -223,21 +224,30 @@ public class WebController : MonoBehaviour {
         CreateNewNode(new Vector3(x, y, 0f));
     }
 
+	private void AbortNodeCreation()
+	{
+		DisableWebPreview ();
+	}
+
 	private void CreateNewNode(Vector3 pos, WebNode origin = null, bool mustConnect = false)
 	{
         Vector3 pos2d = new Vector3(pos.x, pos.y, 0f);
 
         List<WebNode> neighbours = FindNodesInRange(minWebDistance, maxWebDistance, pos2d);
-        if (mustConnect)
-        {
-            if (neighbours.Count == 0)
-                return;
+		if (mustConnect) {
+			if (neighbours.Count == 0) {
+				AbortNodeCreation ();
+				return;
+			}
 
-            if (false == DeductWebCost(originNode.transform.localPosition, pos2d))
-                return;
-
-            if (originNode == null)
-                return;
+			if (false == DeductWebCost (originNode.transform.localPosition, pos2d)){
+				AbortNodeCreation ();
+				return;
+			}
+			if (originNode == null) {
+				AbortNodeCreation ();
+				return;
+			}
         }
 
 		WebNode node = GameObject.Instantiate<WebNode>(webNodePrototype);
