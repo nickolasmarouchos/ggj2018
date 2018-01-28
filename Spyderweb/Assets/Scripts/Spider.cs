@@ -18,6 +18,11 @@ public class Spider : MonoBehaviour {
     public AudioClip[] eat;
     public AudioClip[] die;
 
+    public float maxHealth = 100f;
+    public float healthDecayPerSecond = 2f;
+    public float healthPerFly = 2f;
+    public float health;
+
     WebController controller;
     WebNode currentNode;
     List<WebNode> path;
@@ -26,10 +31,12 @@ public class Spider : MonoBehaviour {
     bool isEating = false;
     DateTime eatStart;
     bool isDying = false;
+    bool fliesAreSpawning = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         path = new List<WebNode>();
+        health = maxHealth;
         audio.Stop();
     }
 
@@ -42,9 +49,13 @@ public class Spider : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        
-        if (!isMoving && currentNode.HasFly())
+	void Update () { 
+        if (fliesAreSpawning)
+        {
+            LoseHealth();
+        }
+
+            if (!isMoving && currentNode.HasFly())
         {
             if (isEating)
                 ContinueEating();
@@ -67,6 +78,7 @@ public class Spider : MonoBehaviour {
     {
         node.StartEating();
         isEating = true;
+        fliesAreSpawning = true;
         eatStart = DateTime.Now;
         PlayAudioEating();
 
@@ -99,7 +111,9 @@ public class Spider : MonoBehaviour {
 		blood.SetActive (false);
 		blood.SetActive (true);
 		Destroy (eatingBar.gameObject);
+        GetHealth();
     }
+
 
     private void StartMoving()
     {
@@ -163,4 +177,15 @@ public class Spider : MonoBehaviour {
         audio.Play();
     }
 
+    private void GetHealth()
+    {
+        health = Math.Min(maxHealth, health + healthPerFly);
+    }
+
+    private void LoseHealth()
+    {
+        health = Math.Max(0f, health - healthDecayPerSecond * Time.deltaTime);
+        if (health <= 0f)
+            controller.LoseGame();
+    }
 }

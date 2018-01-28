@@ -25,8 +25,15 @@ public class GameStateManager : MonoBehaviour {
 		
 	}
 
-	public void EndGame()
+    public void EndGame()
+    {
+        Score score = new Score(0, 0);
+        EndGame(score);
+    }
+
+	public void EndGame(Score score)
 	{
+
 		hud.gameObject.SetActive (false);
 		endScreen.SetActive (true);
 		game.gameObject.SetActive(false);
@@ -38,6 +45,6 @@ public class GameStateManager : MonoBehaviour {
 		endScreen.SetActive (false);
 		hud.gameObject.SetActive (true);
 		game.gameObject.SetActive(true);
-
+        game.stateManager = this;
     }
 }

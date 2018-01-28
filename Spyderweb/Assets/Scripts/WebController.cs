@@ -34,6 +34,7 @@ public class WebController : MonoBehaviour {
     private ScoreController scoreController;
     public int maxNodeCount;
     private float flyLifeTimeModifier;
+    internal GameStateManager stateManager;
 
     // Use this for initialization
     void Start () {
@@ -173,7 +174,7 @@ public class WebController : MonoBehaviour {
 		UpdateWebPreview ();
 	}
 
-	private void DisableWebPreview()
+    private void DisableWebPreview()
 	{
 		Debug.Log ("DisableWebPreview");
 		//remove web preview
@@ -246,10 +247,12 @@ public class WebController : MonoBehaviour {
 
 		node.Init(this);
 		nodes.Add(node);
-        if (nodes.Count > maxNodeCount)
-            maxNodeCount = nodes.Count;
+        maxNodeCount = Math.Max(nodes.Count, maxNodeCount);
+        if (scoreController != null)
+            scoreController.CreateNode(maxNodeCount);
 
         connections.Add(node, new Dictionary<WebNode, WebConnection>());
+
 
         foreach (WebNode neighbour in neighbours)
         {
@@ -313,5 +316,10 @@ public class WebController : MonoBehaviour {
     public float GetFlyLifeTimeModifier()
     {
         return Math.Max(0.3f, Math.Min(1f, 10f/maxNodeCount));
+    }
+
+    public void LoseGame()
+    {
+        stateManager.EndGame(scoreController.GetScore());
     }
 }
