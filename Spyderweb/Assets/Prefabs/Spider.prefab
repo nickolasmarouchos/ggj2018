@@ -565,8 +565,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 613540ee438e02245a051b139151e28f, type: 3}
   die: []
   maxHealth: 100
-  healthDecayPerSecond: 2
-  healthPerFly: 2
+  healthDecayPerSecond: 6
+  healthPerFly: 10
   health: 0
 --- !u!198 &198433510718344180
 ParticleSystem:
