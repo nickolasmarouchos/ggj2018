@@ -30,7 +30,7 @@ public class Spider : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         path = new List<WebNode>();
-
+        audio.Stop();
     }
 
     internal void Init(WebController controller, WebNode node)

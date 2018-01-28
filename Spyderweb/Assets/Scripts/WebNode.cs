@@ -27,6 +27,7 @@ public class WebNode : MonoBehaviour {
     // Use this for initialization
     void Start () {
 		StartFlyTimer ();
+        audio.Stop();
         PlayAudioSpawn();
 	}
 

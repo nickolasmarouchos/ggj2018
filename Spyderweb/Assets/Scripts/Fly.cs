@@ -24,6 +24,7 @@ public class Fly : MonoBehaviour {
 	void Start ()
     {
         life = lifetime;
+        audio.Stop();
         PlayAudioSpawn();
     }
 
