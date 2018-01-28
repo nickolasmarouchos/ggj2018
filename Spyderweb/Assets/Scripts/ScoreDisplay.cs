@@ -9,15 +9,16 @@ public class ScoreDisplay : MonoBehaviour
 {
     string baseString = "Score: ";
     string currentString = "Score: 0";
+    public Text textBox;
 
     private void Update()
     {
-        // TODO: draw score
+
     }
 
-    public void SetScore (int score)
+    public void SetScore(Score score)
     {
-        currentString = baseString + score;
-        Debug.Log(currentString);
+        if (textBox != null)
+            textBox.text = "Nodes: " + score.nodes + "\n Flies: " + score.flies; 
     }
 }

@@ -5,32 +5,34 @@ public class ScoreController
     public int maxScorePerFly = 10;
     public int scorePerNode = 1;
 
-    int flies = 0;
-    int nodes = 0;
+    Score score;
 
     ScoreDisplay scoreDisplay;
-    int totalScore = 0;
+    //int totalScore = 0;
 
     public ScoreController(ScoreDisplay display)
     {
         scoreDisplay = display;
+        score = new Score(0, 6);
+        scoreDisplay.SetScore(score);
     }
 
     public void EatFly(float flyLife, int nodeCount)
     {
-        ++flies;
-        totalScore += /* (int)Math.Round(flyLife * maxScorePerFly) + */ nodeCount * scorePerNode;
-        scoreDisplay.SetScore(totalScore);
+        ++score.flies;
+        //totalScore += /* (int)Math.Round(flyLife * maxScorePerFly) + */ nodeCount * scorePerNode;
+        scoreDisplay.SetScore(score);
     }
 
     public void CreateNode(int maxNodes)
     {
-        nodes = maxNodes;
+        score.nodes = maxNodes;
+        scoreDisplay.SetScore(score);
     }
 
     internal Score GetScore()
     {
-        return new Score(flies, nodes);
+        return score;
     }
 }
 

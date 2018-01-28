@@ -11,6 +11,7 @@ public class WebController : MonoBehaviour {
 	public WebPreview webPreviewPrototype;
     public Spider spiderPrototype;
 	public Canvas GameUI;
+    public Text scoreText;
     public Slider spiderHealthBar;
     public ScoreDisplay scoreDisplayPrototype;
 	public GameObject nodeBreakEffect;
@@ -63,6 +64,7 @@ public class WebController : MonoBehaviour {
         spider.transform.SetParent(transform);
 
         ScoreDisplay scoreDisplay = GameObject.Instantiate<ScoreDisplay>(scoreDisplayPrototype);
+        scoreDisplay.textBox = scoreText;
         scoreController = new ScoreController(scoreDisplay);
         scoreDisplay.transform.SetParent(transform);
 	}
@@ -246,7 +248,9 @@ public class WebController : MonoBehaviour {
 		nodes.Add(node);
         maxNodeCount = Math.Max(nodes.Count, maxNodeCount);
         if (scoreController != null)
+        {
             scoreController.CreateNode(maxNodeCount);
+        }
 
         connections.Add(node, new Dictionary<WebNode, WebConnection>());
 
