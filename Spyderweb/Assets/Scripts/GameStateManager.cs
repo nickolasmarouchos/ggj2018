@@ -10,18 +10,25 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject startScreen;
 	public GameObject endScreen;
 	public GameObject hud;
+	public GameObject credits;
 
     WebController currentGame;
 
 	// Use this for initialization
 	void Start () {
+        //StartGame();
+		ShowMenu();
+	}
+
+	public void ShowMenu()
+	{
 		game.gameObject.SetActive(false);
 		startScreen.gameObject.SetActive (true);
 		endScreen.gameObject.SetActive (false);
 		hud.gameObject.SetActive (false);
-        //StartGame();
+		credits.gameObject.SetActive (false);
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		
@@ -37,6 +44,7 @@ public class GameStateManager : MonoBehaviour {
 	{
 
 		hud.gameObject.SetActive (false);
+		credits.gameObject.SetActive (false);
 		endScreen.SetActive (true);
 		currentGame.gameObject.SetActive(false);
         GameObject.Destroy(currentGame);
@@ -48,11 +56,20 @@ public class GameStateManager : MonoBehaviour {
         }
     }
 
+	public void ShowCredits()
+	{
+		credits.gameObject.SetActive (true);
+		startScreen.SetActive (false);
+		endScreen.SetActive (false);
+		hud.gameObject.SetActive (false);
+	}
+
     public void StartGame()
     {
         currentGame = GameObject.Instantiate<WebController>(game);
 		startScreen.SetActive (false);
 		endScreen.SetActive (false);
+		credits.gameObject.SetActive (false);
 		hud.gameObject.SetActive (true);
         currentGame.gameObject.SetActive(true);
         currentGame.stateManager = this;
