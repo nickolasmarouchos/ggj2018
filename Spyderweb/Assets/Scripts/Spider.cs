@@ -13,11 +13,6 @@ public class Spider : MonoBehaviour {
 	public GameObject eatingBarPrototype;
 	GameObject eatingBar;
 
-    public AudioSource audio;
-    public AudioClip[] move;
-    public AudioClip[] eat;
-    public AudioClip[] die;
-
     WebController controller;
     WebNode currentNode;
     List<WebNode> path;
@@ -43,7 +38,7 @@ public class Spider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         if (!isMoving && currentNode.HasFly())
         {
             if (isEating)
@@ -68,8 +63,8 @@ public class Spider : MonoBehaviour {
         node.StartEating();
         isEating = true;
         eatStart = DateTime.Now;
-        PlayAudioEating();
 
+		this.gameObject.GetComponent<Animation>().Play("SpiderEat");
 
 		eatingBar = GameObject.Instantiate<GameObject> (eatingBarPrototype);
 		eatingBar.transform.parent = transform;
@@ -90,10 +85,10 @@ public class Spider : MonoBehaviour {
 
     private void FinishEating()
     {
-        //Debug.Log("Finish Eating");
+		//Debug.Log("Finish Eating");
+		this.gameObject.GetComponent<Animation>().Play("SpiderIdle");
         currentNode.FinishEating();
-        isEating = false;
-        audio.Stop();
+		isEating = false;
 		blood.SetActive (false);
 		blood.SetActive (true);
 		Destroy (eatingBar.gameObject);
@@ -107,7 +102,8 @@ public class Spider : MonoBehaviour {
             isMoving = true;
             path[0].StartMovingToTile();
             currentNode.LeaveTile();
-            PlayAudioMoving();
+			this.gameObject.GetComponent<Animation>().Play("SpiderWalk");
+
         }
         else
             path.Clear();
@@ -120,7 +116,8 @@ public class Spider : MonoBehaviour {
         {
             currentNode = dest;
             isMoving = false;
-            audio.Stop();
+
+			this.gameObject.GetComponent<Animation>().Play("SpiderIdle");
             return;
         }
 
@@ -140,21 +137,4 @@ public class Spider : MonoBehaviour {
     {
         path.Add(node);
     }
-
-    private void PlayAudioMoving()
-    {
-        audio.clip = move[UnityEngine.Random.Range(0, move.Length)];
-        audio.mute = false;
-        audio.loop = true;
-        audio.Play();
-    }
-
-    private void PlayAudioEating()
-    {
-        audio.clip = eat[UnityEngine.Random.Range(0, eat.Length)];
-        audio.mute = false;
-        audio.loop = true;
-        audio.Play();
-    }
-
 }
