@@ -550,7 +550,7 @@ MonoBehaviour:
   moveSpeed: 0.15
   eatDuration: 1
   blood: {fileID: 1897071896766924}
-  eatingBarPrototype: {fileID: 1425312960932042, guid: 3b87cd73c3a624aa6905d7d6dbf0bed3,
+  eatingBarPrototype: {fileID: 1425312960932042, guid: 0501afc8b11e24e61bd8a155dc0a9cb7,
     type: 2}
   audio: {fileID: 82155049229013560}
   move:
