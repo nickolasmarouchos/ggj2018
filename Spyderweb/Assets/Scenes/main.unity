@@ -2055,10 +2055,10 @@ MonoBehaviour:
   minWebDistance: 1.5
   maxWebDistance: 3.9
   mainCam: {fileID: 1459543018}
-  spiderPower: 10
-  spiderPowerPerFly: 5
+  spiderPower: 30
+  spiderPowerPerFly: 10
   webCostModifier: 1
-  maxSpiderPower: 30
+  maxSpiderPower: 100
   maxNodeCount: 0
 --- !u!4 &1776504582
 Transform:
