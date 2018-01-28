@@ -1130,6 +1130,8 @@ MonoBehaviour:
     type: 2}
   webConnectionPrototype: {fileID: 114240747287306710, guid: 2a50f3809552e463cbe61f50fe593def,
     type: 2}
+  webPreviewPrototype: {fileID: 114434896322134134, guid: 90c879c476072467b9294ef6f20290e9,
+    type: 2}
   spiderPrototype: {fileID: 114169131656453412, guid: 0b26c768222374393b0f7c3a12f16cfa,
     type: 2}
   GameUI: {fileID: 1665566230}

@@ -7,6 +7,7 @@ public class WebController : MonoBehaviour {
 
     public WebNode webNodePrototype;
     public WebConnection webConnectionPrototype;
+	public WebPreview webPreviewPrototype;
     public Spider spiderPrototype;
 	public Canvas GameUI;
     public ScoreDisplay scoreDisplayPrototype;
@@ -19,8 +20,11 @@ public class WebController : MonoBehaviour {
     private Dictionary<WebNode, Dictionary<WebNode, WebConnection>> connections;
 
     private bool webBuildMode = false;
-    private WebNode originNode;
+	private bool webPreviewMode = false;
+	private WebNode originNode;
     private Spider spider;
+	private WebPreview previewWeb;
+	private WebNode previewOrigin;
 
     public float spiderPower = 10f;
     public float spiderPowerPerFly = 5f;
@@ -72,6 +76,14 @@ public class WebController : MonoBehaviour {
             }
         }
 
+		if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved) ||
+			Input.GetMouseButton(0))
+		{
+			//Update Preview
+			if (webBuildMode)
+				UpdateWebPreview();
+		}
+
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended) ||
             Input.GetMouseButtonUp(0))
         {
@@ -106,9 +118,10 @@ public class WebController : MonoBehaviour {
     }
 
     private void TryExpandWeb()
-    {
+	{
+		DisableWebPreview ();
         CreateNewNodeOnClick();
-        DisableBuildMode();
+		DisableBuildMode();
     }
 
     public void DestroyNode(WebNode node)
@@ -145,7 +158,35 @@ public class WebController : MonoBehaviour {
     {
         webBuildMode = false;
         originNode = null;
-    }
+	}
+
+	private void EnableWebPreview (WebNode origin)
+	{
+		Debug.Log ("EnableWebPreview");
+		//create web preview
+		previewWeb = GameObject.Instantiate<WebPreview> (webPreviewPrototype);
+		previewOrigin = origin;
+		UpdateWebPreview ();
+	}
+
+	private void DisableWebPreview()
+	{
+		Debug.Log ("DisableWebPreview");
+		//remove web preview
+		previewOrigin = null;
+		Destroy(previewWeb.gameObject);
+	}
+
+	private void UpdateWebPreview()
+	{
+		Debug.Log ("UpdateWebPreview");
+		//update web preview
+		//Camera.main.ScreenPointToRay(Input.mousePosition);
+		Vector3 inputLocation = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		previewWeb.updateVisual(previewOrigin,inputLocation);
+		previewWeb.transform.SetParent(transform);
+
+	}
 
     private WebNode CheckWebNodeHit()
     {
@@ -162,7 +203,8 @@ public class WebController : MonoBehaviour {
 
     private void ResolveWebNodeHit(WebNode origin)
     {
-        EnableBuildMode(origin);
+		EnableBuildMode(origin);
+		EnableWebPreview (origin);
     }
 
     private void CreateNewNodeOnClick()
