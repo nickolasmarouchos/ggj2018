@@ -33,6 +33,7 @@ public class WebController : MonoBehaviour {
     public float spiderPower = 10f;
     public float spiderPowerPerFly = 5f;
     public float webCostModifier = 1f;
+    public float maxSpiderPower = 30f;
 
     private ScoreController scoreController;
     public int maxNodeCount;
@@ -274,7 +275,7 @@ public class WebController : MonoBehaviour {
 
     public void EatFly()
     {
-        spiderPower += spiderPowerPerFly;
+        spiderPower = Math.Min(maxSpiderPower, spiderPowerPerFly);
         scoreController.EatFly(1f, maxNodeCount);
     }
 
