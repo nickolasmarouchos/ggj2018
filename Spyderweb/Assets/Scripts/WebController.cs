@@ -280,7 +280,12 @@ public class WebController : MonoBehaviour {
         foreach (WebNode node in nodes)
         {
             float distance = Vector3.Distance(origin, node.transform.localPosition);
-            if (distance > minWebDistance && distance < maxWebDistance)
+            if (distance < minWebDistance)
+            {
+                neighbours.Clear();
+                return neighbours;
+            }
+            if (distance < maxWebDistance)
                 neighbours.Add(node);
         }
 
