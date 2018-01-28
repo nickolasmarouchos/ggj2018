@@ -12,6 +12,8 @@ public class WebController : MonoBehaviour {
     public Spider spiderPrototype;
 	public Canvas GameUI;
     public Text scoreText;
+    public Text finalScoreNodeField;
+    public Text finalScoreFlyField;
     public Slider spiderHealthBar;
     public ScoreDisplay scoreDisplayPrototype;
 	public GameObject nodeBreakEffect;
@@ -340,6 +342,9 @@ public class WebController : MonoBehaviour {
 
     public void LoseGame()
     {
-        stateManager.EndGame(scoreController.GetScore());
+        Score score = scoreController.GetScore();
+        finalScoreFlyField.text = score.flies.ToString();
+        finalScoreNodeField.text = score.nodes.ToString();
+        stateManager.EndGame(score);
     }
 }

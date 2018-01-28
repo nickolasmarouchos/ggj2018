@@ -11,6 +11,8 @@ public class GameStateManager : MonoBehaviour {
 	public GameObject endScreen;
 	public GameObject hud;
 
+    WebController currentGame;
+
 	// Use this for initialization
 	void Start () {
 		game.gameObject.SetActive(false);
@@ -36,15 +38,23 @@ public class GameStateManager : MonoBehaviour {
 
 		hud.gameObject.SetActive (false);
 		endScreen.SetActive (true);
-		game.gameObject.SetActive(false);
-	}
+		currentGame.gameObject.SetActive(false);
+        GameObject.Destroy(currentGame);
+
+        FlyBar[] flyBars = GameObject.FindObjectsOfType<FlyBar>();
+        for (int i = 0; i < flyBars.Length; i++)
+        {
+            GameObject.Destroy(flyBars[i].gameObject);
+        }
+    }
 
     public void StartGame()
     {
+        currentGame = GameObject.Instantiate<WebController>(game);
 		startScreen.SetActive (false);
 		endScreen.SetActive (false);
 		hud.gameObject.SetActive (true);
-		game.gameObject.SetActive(true);
-        game.stateManager = this;
+        currentGame.gameObject.SetActive(true);
+        currentGame.stateManager = this;
     }
 }
